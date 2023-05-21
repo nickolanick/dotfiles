@@ -1,11 +1,12 @@
-vim.opt.termguicolors = true require("bufferline").setup{
+vim.opt.termguicolors = true
+require("bufferline").setup{
 	options = {
 		offsets = {
 			{
 				filetype = "NvimTree",
-				text="",
+				text="Tree",
 				separator= true,
-				text_align = "left"
+				text_align = "center"
 			}
 		}
 	}

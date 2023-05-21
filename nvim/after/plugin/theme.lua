@@ -15,4 +15,4 @@ require('kanagawa').setup({})
 vim.cmd("colorscheme kanagawa-wave")
 
 -- Light
---vim.cmd("colorscheme kanagawa-lotus")
+-- vim.cmd("colorscheme kanagawa-lotus")

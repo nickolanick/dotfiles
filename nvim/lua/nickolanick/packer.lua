@@ -6,15 +6,17 @@ vim.cmd [[packadd packer.nvim]]
 return require('packer').startup(function(use)
 	-- Packer can manage itself
 	use 'wbthomason/packer.nvim'
+	-- Devicons
+    use { 'nvim-tree/nvim-web-devicons'}
 	-- Telescope 
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		requires = { {'nvim-lua/plenary.nvim'} }
 	}
-	-- Colorscheme 
-	-- use { "ellisonleao/gruvbox.nvim" }
-	-- use({ 'rose-pine/neovim', as = 'rose-pine' })
-	-- use { "catppuccin/nvim", as = "catppuccin" }
+	-- Colorscheme
+	use { "ellisonleao/gruvbox.nvim" }
+	use { 'rose-pine/neovim', as = 'rose-pine' }
+	use { "catppuccin/nvim", as = "catppuccin" }
 	-- use { "folke/tokyonight.nvim", as = "tokyonight" }
 	use {"rebelot/kanagawa.nvim", as = "kanagwa" }
 
@@ -31,7 +33,6 @@ return require('packer').startup(function(use)
 	-- LSP config
 	-- TODO: remove lsp-zero, configure from scratch
 	-- TODO: figure out how this LSP magic works
-	--
 	use {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v2.x',
@@ -71,4 +72,6 @@ return require('packer').startup(function(use)
 	-- Bufferline -> tabs for neovim
 	use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 	use {'famiu/bufdelete.nvim'}
+	-- Shows git changes
+	use {'airblade/vim-gitgutter'}
 end)
