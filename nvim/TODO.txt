@@ -8,9 +8,15 @@
 7. Key binding to have 'o + <ctr> + p' automatic. 
 8. Auto format on paste.
 9. telescope, filter out some directories on search.
+10. Add long-living sessions -> https://github.com/rmagatti/auto-session/
 
 # yabai
 1. add shortcuts to focus certain applications. ( eg: browser, terminal, slack )
 
 # iterm2
 1. Add new alternativve shortcut for <c-l>.
+
+
+# other
+1. Update readme with installation details.
+2. Add updated yabai, zshrc and tmux configs.

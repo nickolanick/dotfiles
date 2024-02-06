@@ -2,7 +2,7 @@
 vim.cmd.laststatus = 2
 -- Enabled tab/space highlights
 vim.opt.list=true
-vim.opt.listchars = { space = ' ', tab = '| ' , trail = "•"}
+vim.opt.listchars = { space = ' ', tab = '| ' , trail = "•", eol = "↲"}
 -- Tab settings
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -18,3 +18,12 @@ vim.opt.scrolloff = 8
 vim.opt.swapfile = false
 -- Max column width
 vim.opt.colorcolumn = "120"
+-- Vim-go settings
+vim.g.go_build_tags = "e2e long_integration_test"
+vim.g.syntastic_go_go_test_args = '-tags="e2e long_integration_test"'
+vim.g.syntastic_go_go_build_args = '-tags="e2e long_integration_test"'
+vim.o.splitright = true
+vim.g.go_term_enabled = true
+vim.g.go_term_mode = "vsplit"
+vim.opt.splitright = true
+

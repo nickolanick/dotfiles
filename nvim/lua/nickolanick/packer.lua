@@ -8,7 +8,7 @@ return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 	-- Devicons
     use { 'nvim-tree/nvim-web-devicons'}
-	-- Telescope 
+	-- Telescope
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.1',
 		requires = { {'nvim-lua/plenary.nvim'} }
@@ -17,8 +17,8 @@ return require('packer').startup(function(use)
 	use { "ellisonleao/gruvbox.nvim" }
 	use { 'rose-pine/neovim', as = 'rose-pine' }
 	use { "catppuccin/nvim", as = "catppuccin" }
-	-- use { "folke/tokyonight.nvim", as = "tokyonight" }
-	use {"rebelot/kanagawa.nvim", as = "kanagwa" }
+	use { "folke/tokyonight.nvim", as = "tokyonight" }
+	use {  "rebelot/kanagawa.nvim", as = "kanagwa" }
 
 	-- Status line
 	use {
@@ -30,6 +30,8 @@ return require('packer').startup(function(use)
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
+	-- Go
+	use "fatih/vim-go"
 	-- LSP config
 	-- TODO: remove lsp-zero, configure from scratch
 	-- TODO: figure out how this LSP magic works
@@ -73,5 +75,17 @@ return require('packer').startup(function(use)
 	use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
 	use {'famiu/bufdelete.nvim'}
 	-- Shows git changes
-	use {'airblade/vim-gitgutter'}
+	--  use {'airblade/vim-gitgutter'}
+	-- Async lib
+	use "nvim-lua/plenary.nvim"
+
+	use {
+		"nvim-neotest/neotest",
+		requires = {
+		"nvim-neotest/neotest-go",
+		"nvim-lua/plenary.nvim",
+		"antoinemadec/FixCursorHold.nvim",
+		"nvim-treesitter/nvim-treesitter"
+		}
+	}
 end)

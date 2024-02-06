@@ -1,18 +1,25 @@
-require('kanagawa').setup({})
+-- require('kanagawa').setup({})
 
 -- Tokyonight setup
--- require("tokyonight").setup({})
+require("tokyonight").setup({
+	style = "storm",
+	hide_inactive_statusline = false,
+})
+
+vim.cmd("colorscheme tokyonight")
 
 -- Catppucin setup
 -- require("catppuccin").setup({
---	flavour = "frappe", -- latte, frappe, macchiato, mocha
---})
+-- 	flavour = "frappe", -- latte, frappe, macchiato, mocha
+-- })
 
+
+-- Kanagawa
 -- Dark
 --vim.cmd("colorscheme kanagawa-dragon")
 
 -- Medium
-vim.cmd("colorscheme kanagawa-wave")
+-- vim.cmd("colorscheme kanagawa-wave")
 
 -- Light
--- vim.cmd("colorscheme kanagawa-lotus")
+--vim.cmd("colorscheme kanagawa-lotus")

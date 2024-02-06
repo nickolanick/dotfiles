@@ -8,8 +8,31 @@ vim.opt.termguicolors = true
 -- Setup nvim-tree
 require("nvim-tree").setup({
 	sort_by = "case_sensitive",
+	update_focused_file = {
+		enable = true,
+	},
+	diagnostics = {
+		enable = true,
+		show_on_dirs = true,
+		icons = {
+			hint = "",
+			info = "",
+			warning = "",
+			error = "",
+		},
+	},
+
+	log = {
+		enable = true,
+		truncate = true,
+		types = {
+			diagnostics = true,
+		},
+	},
 	view = {
-		width = 50,
+		width = 40,
+		side = "left",
+		signcolumn = 'yes',
 	},
 	renderer = {
 		group_empty = true,
@@ -20,3 +43,6 @@ require("nvim-tree").setup({
 })
 
 vim.opt.fillchars:append { eob = " " }
+
+vim.g.nvim_tree_respect_buf_cwd = 1
+-- local treeutils = require("treeutils")

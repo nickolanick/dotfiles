@@ -13,11 +13,12 @@ require('lspconfig').gopls.setup({
 	settings = {
 		gopls = {
 			completeUnimported = true,
-			usePlaceholders = true,
+			usePlaceholders = false,
 			analyses = {
 				unusedparams = true,
 			},
 			staticcheck = true,
+			buildFlags = {"-tags=long_integration_test,e2e"}
 		},
 	},
 })
