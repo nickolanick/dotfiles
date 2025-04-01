@@ -44,5 +44,8 @@ vim.g.syntastic_go_go_test_args = '-tags="e2e long_integration_test"'
 vim.g.syntastic_go_go_build_args = '-tags="e2e long_integration_test"'
 
 
+
 -- TODO add format.
 -- vim.lsp.buf.format()
+vim.keymap.set("n", "<leader>m", "zg")
+vim.keymap.set("n", "<leader>[", "z=")

@@ -1,21 +1,6 @@
 # nvim
-1. After GD + <C-o> delete the GD buffer.
-2. Configure LSP indicators for bufferline tabs.
-3. Push everything to git.
-4. Bufferline pining tabs
-5. Change theme to be closer looking to goland ui. ( green/red/orange )
-6. LSP: automatic import og go packages. Both on error and on completion.
-7. Key binding to have 'o + <ctr> + p' automatic. 
-8. Auto format on paste.
-9. telescope, filter out some directories on search.
-10. Add long-living sessions -> https://github.com/rmagatti/auto-session/
-
-# yabai
-1. add shortcuts to focus certain applications. ( eg: browser, terminal, slack )
-
-# iterm2
-1. Add new alternativve shortcut for <c-l>.
-
+1. Auto format on paste.
+2. telescope, filter out some directories on search.
 
 # other
 1. Update readme with installation details.

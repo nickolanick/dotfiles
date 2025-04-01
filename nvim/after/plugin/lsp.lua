@@ -1,11 +1,12 @@
 local lsp = require('lsp-zero').preset({})
 
-lsp.on_attach(function(client, bufnr)
+lsp.on_attach(function(_, bufnr)
 	lsp.default_keymaps({buffer = bufnr})
 end)
 
 -- Configure lua language server for neovim
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+
 -- Configure gopls lsp
 require('lspconfig').gopls.setup({
 	cmd = {"gopls", "serve"},
@@ -18,10 +19,12 @@ require('lspconfig').gopls.setup({
 				unusedparams = true,
 			},
 			staticcheck = true,
-			buildFlags = {"-tags=long_integration_test,e2e"}
+			buildFlags = {"-tags=long_integration_test,e2e,integration_test"}
 		},
 	},
 })
+
+require('lspconfig').pyright.setup({})
 
 lsp.setup()
 
@@ -41,3 +44,5 @@ cmp.setup({
 	}
 })
 
+vim.keymap.set("n", "<leader>fe", vim.diagnostic.goto_next)
+vim.keymap.set("n", "<leader>fp", vim.diagnostic.goto_prev)

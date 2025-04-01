@@ -19,11 +19,14 @@ vim.opt.swapfile = false
 -- Max column width
 vim.opt.colorcolumn = "120"
 -- Vim-go settings
-vim.g.go_build_tags = "e2e long_integration_test"
-vim.g.syntastic_go_go_test_args = '-tags="e2e long_integration_test"'
-vim.g.syntastic_go_go_build_args = '-tags="e2e long_integration_test"'
+vim.g.go_build_tags = "e2e long_integration_test integration_test"
+vim.g.syntastic_go_go_test_args = '-tags="e2e long_integration_test integration_test"'
+vim.g.syntastic_go_go_build_args = '-tags="e2e long_integration_test integration_test"'
 vim.o.splitright = true
 vim.g.go_term_enabled = true
 vim.g.go_term_mode = "vsplit"
 vim.opt.splitright = true
-
+-- Spelling
+vim.opt.spelloptions = "camel"
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true

@@ -1,4 +1,3 @@
--- require('kanagawa').setup({})
 
 -- Tokyonight setup
 require("tokyonight").setup({
@@ -15,11 +14,12 @@ vim.cmd("colorscheme tokyonight")
 
 
 -- Kanagawa
--- Dark
+--   Dark
+-- require('kanagawa').setup({})
 --vim.cmd("colorscheme kanagawa-dragon")
 
--- Medium
+--   Medium
 -- vim.cmd("colorscheme kanagawa-wave")
 
--- Light
+--   Light
 --vim.cmd("colorscheme kanagawa-lotus")
