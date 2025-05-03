@@ -1,27 +1,145 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/nickolanick/.zshrc'
-autoload -Uz compinit
-compinit
-# exports
-export KERN_DIR=/usr/src/kernels/`uname -r`
-export TERM="xterm-256color" 
-# modulus
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /home/nickolanick/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/powerlevel10k/powerlevel10k.zsh-theme
-# My aliases
-alias "..=cd .."
-alias "c=xclip -selection clipboard"
-alias "v=xclip -selection clipboard -o"
-alias "vim=vimx"
-alias "work=cd ~/Documents/work"
-alias "keys=cd ~/Documents/keys"
-#
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/bin/terraform terraform
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$PATH
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+export ZSH="$HOME/.oh-my-zsh"
+
+ZSH_THEME="robbyrussell"
+
+plugins=(
+	zsh-autosuggestions
+	zsh-syntax-highlighting
+	git
+	kube-ps1
+)
+
+# Common aliases
+alias pip="pip3"
+alias vim="nvim"
+alias k="kubectl"
+alias axbrew='arch -x86_64 /usr/local/homebrew/bin/brew'
+
+source $ZSH/oh-my-zsh.sh
+KUBE_PS1_NS_ENABLE=false
+RPROMPT='$(kube_ps1)'
+
+# git shortcuts
+alias gittree='git log --oneline --decorate --graph --all'
+
+gch() {
+	if [[ -z "${1}" ]]; then
+		git checkout $(git branch --all | fzf | tr -d '"')
+	else
+		git checkout $1 || git checkout -b $1
+	fi
+}
+
+gitl() {
+	git log --oneline --decorate --graph --all
+}
+
+### K8S shortcuts
+kx () {
+  kubectx $@
+  if [[ $# -eq 1 ]]; then
+    profile=$(echo $1 | cut -d "-" -f 1)
+    echo $profile > ~/.tsh/current-profile
+  fi
+}
+
+k8s_debug_pod() {
+  cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mykola-debug-pod
+  labels:
+    purpose: debug
+spec:
+  containers:
+  - name: curl-container
+    image: nicolaka/netshoot:latest
+    command: ["/bin/sh", "-c", "sleep 3600"]
+    tty: true
+    stdin: true
+  restartPolicy: Never
+EOF
+
+  # Wait for the pod to be ready
+  echo "Waiting for pod curl-debug to be ready..."
+  kubectl wait --for=condition=Ready pod/mykola-debug-pod --timeout=60s
+
+  # Exec into the pod if it's ready
+  echo "Exec'ing into the curl-debug pod..."
+  kubectl exec -it mykola-debug-pod -- /bin/sh
+}
+
+connectToPodNode() {
+	podName=$1
+	nsName=$2
+	export nodeName=$(kubectl get pods -n $nsName -o jsonpath='{.spec.nodeName}' $podName)
+	aws ssm start-session --target $(aws ec2 describe-instances --filters "Name=tag:Name,Values=$nodeName" --query "Reservations[*].Instances[*].InstanceId" --output text)
+}
+
+connectToNode() {
+	export nodeName=$1
+	aws ssm start-session --target $(aws ec2 describe-instances --filters "Name=tag:Name,Values=$nodeName" --query "Reservations[*].Instances[*].InstanceId" --output text)
+}
+
+sso() {
+    aws sso login --profile "$1"
+}
+
+# ollivanders shortcuts
+upE2EOllivandersPorts() {
+	pkill -f "port-forward svc/engines-e2e"
+	pkill -f "port-forward svc/accounts-e2e"
+	kubectl port-forward svc/accounts-e2e 9999 &
+	kubectl port-forward svc/engines-e2e 9090 &
+	kubectl port-forward svc/engines-e2e 9095 &
+}
+
+downE2EOllivandersPorts() {
+	pkill -f "port-forward svc/engines-e2e"
+	pkill -f "port-forward svc/accounts-e2e"
+}
+
+upOllivandersPorts () {
+	kubectx -c
+	downOllivandersPorts
+	kubectl port-forward -n ollivanders svc/accounts-ollivanders 9999 2>&1 1>/dev/null &
+	kubectl port-forward -n ollivanders svc/engines-ollivanders 9090 2>&1 1>/dev/null &
+	kubectl port-forward -n ollivanders svc/engines-ollivanders 9095 2>&1 1>/dev/null &
+}
+
+downOllivandersPorts () {
+	pkill -f "port-forward -n ollivanders svc/accounts-ollivanders 9999" 2>&1 1>/dev/null
+	pkill -f "port-forward -n ollivanders svc/engines-ollivanders 9090" 2>&1 1>/dev/null
+	pkill -f "port-forward -n ollivanders svc/engines-ollivanders 9095" 2>&1 1>/dev/null
+}
+
+eval "$(direnv hook zsh)"
+
+__jump_chpwd() {
+  jump chdir
+}
+
+jump_completion() {
+  reply="'$(jump hint "$@")'"
+}
+
+# jump around ... and find out
+j() {
+  local dir="$(jump cd $@)"
+  test -d "$dir" && cd "$dir"
+}
+
+tm() {
+  [ -z "${TMUX}" ] && tmux new-session -A -s $1 && exit(0)
+  tmux detach -E "tmux new-session -A -s $1"
+}
+
+typeset -gaU chpwd_functions
+chpwd_functions+=__jump_chpwd
+
+compctl -U -K jump_completion j
