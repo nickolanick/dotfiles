@@ -46,3 +46,4 @@ cmp.setup({
 
 vim.keymap.set("n", "<leader>fe", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>fp", vim.diagnostic.goto_prev)
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.rename)
