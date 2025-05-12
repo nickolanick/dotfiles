@@ -1,11 +1,19 @@
+# Global exports.
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="robbyrussell"
+### Common aliases
+alias pip="pip3"
+alias vim="nvim"
+alias k="kubectl"
+alias axbrew='arch -x86_64 /usr/local/homebrew/bin/brew'
 
+### ZSH setup.
+#
+ZSH_THEME="robbyrussell"
 plugins=(
 	zsh-autosuggestions
 	zsh-syntax-highlighting
@@ -13,17 +21,12 @@ plugins=(
 	kube-ps1
 )
 
-# Common aliases
-alias pip="pip3"
-alias vim="nvim"
-alias k="kubectl"
-alias axbrew='arch -x86_64 /usr/local/homebrew/bin/brew'
-
 source $ZSH/oh-my-zsh.sh
 KUBE_PS1_NS_ENABLE=false
 RPROMPT='$(kube_ps1)'
+eval "$(direnv hook zsh)"
 
-# git shortcuts
+### GIT shortcuts.
 alias gittree='git log --oneline --decorate --graph --all'
 
 gch() {
@@ -55,6 +58,8 @@ metadata:
   name: mykola-debug-pod
   labels:
     purpose: debug
+    app.kubernetes.io/instance: e2e
+    app.kubernetes.io/name: engines-e2e
 spec:
   containers:
   - name: curl-container
@@ -90,7 +95,7 @@ sso() {
     aws sso login --profile "$1"
 }
 
-# ollivanders shortcuts
+# Ollivanders shortcuts
 upE2EOllivandersPorts() {
 	pkill -f "port-forward svc/engines-e2e"
 	pkill -f "port-forward svc/accounts-e2e"
@@ -118,7 +123,17 @@ downOllivandersPorts () {
 	pkill -f "port-forward -n ollivanders svc/engines-ollivanders 9095" 2>&1 1>/dev/null
 }
 
-eval "$(direnv hook zsh)"
+# Tmux shortcuts.
+tm() {
+  [ -z "${TMUX}" ] && tmux new-session -A -s $1 && exit(0)
+  tmux detach -E "tmux new-session -A -s $1"
+}
+
+# Jump completion setup.
+j() {
+  local dir="$(jump cd $@)"
+  test -d "$dir" && cd "$dir"
+}
 
 __jump_chpwd() {
   jump chdir
@@ -128,18 +143,10 @@ jump_completion() {
   reply="'$(jump hint "$@")'"
 }
 
-# jump around ... and find out
-j() {
-  local dir="$(jump cd $@)"
-  test -d "$dir" && cd "$dir"
-}
-
-tm() {
-  [ -z "${TMUX}" ] && tmux new-session -A -s $1 && exit(0)
-  tmux detach -E "tmux new-session -A -s $1"
-}
-
 typeset -gaU chpwd_functions
 chpwd_functions+=__jump_chpwd
 
 compctl -U -K jump_completion j
+
+# FZF integration with cntrl + r search.
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
