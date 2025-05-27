@@ -95,6 +95,17 @@ sso() {
     aws sso login --profile "$1"
 }
 
+dockerLogin() {
+  export AWS_PROFILE=publishing
+  export AWS_REGION=us-east-1
+  aws ecr get-login-password | docker login -u AWS --password-stdin "https://$(aws sts get-caller-identity --query 'Account' --output text).dkr.ecr.us-east-1.amazonaws.com"
+}
+
+loginAll() {
+	sso
+	dockerLogin
+}
+
 # Ollivanders shortcuts
 upE2EOllivandersPorts() {
 	pkill -f "port-forward svc/engines-e2e"

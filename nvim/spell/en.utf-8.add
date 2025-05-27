@@ -215,3 +215,6 @@ sa
 ZSH
 FZF
 cntrl
+UUID
+stdout
+teardown

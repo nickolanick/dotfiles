@@ -160,10 +160,16 @@ alt - l: yabai -m window --focus east
 ctrl - left : yabai -m space --focus prev
 ctrl - right : yabai -m space --focus next
 ctrl - z : yabai -m space --focus recent
-ctrl - 1 : yabai -m space --focus 1 && osascript -e 'tell application "Arc" to activate' || open -a "Arc"
-ctrl - 2 : yabai -m space --focus 2 && osascript -e 'tell application "iterm" to activate' || open -a "iterm"
-ctrl - 3 : yabai -m space --focus 3 && osascript -e 'tell application "Slack" to activate' || open -a "Slack"
-ctrl - 4 : yabai -m space --focus 4 && osascript -e 'tell application "Notion" to activate' || open -a "Notion"
+#ctrl - 1 : yabai -m space --focus 1 && osascript -e 'tell application "Arc" to activate' || open -a "Arc"
+#ctrl - 2 : yabai -m space --focus 2 && osascript -e 'tell application "iterm" to activate' || open -a "iterm"
+#ctrl - 3 : yabai -m space --focus 3 && osascript -e 'tell application "Slack" to activate' || open -a "Slack"
+#ctrl - 4 : yabai -m space --focus 4 && osascript -e 'tell application "Notion" to activate' || open -a "Notion"
+
+ctrl - 1 : osascript -e 'tell application "Arc" to activate' || open -a "Arc"
+ctrl - 2 : osascript -e 'tell application "iterm" to activate' || open -a "iterm"
+ctrl - 3 : osascript -e 'tell application "Slack" to activate' || open -a "Slack"
+ctrl - 4 : osascript -e 'tell application "Notion" to activate' || open -a "Notion"
+
 ctrl - 5 : yabai -m space --focus 5
 ctrl - 6 : yabai -m space --focus 6
 ctrl - 7 : yabai -m space --focus 7
